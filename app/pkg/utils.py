@@ -1,8 +1,8 @@
 import secrets
+from base64 import b64encode
 from hashlib import sha256
 from hmac import HMAC
 from urllib.parse import urlencode
-from base64 import b64encode
 
 
 def get_random_string(count_letters: int) -> str:
