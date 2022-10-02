@@ -108,3 +108,22 @@ async def delete_task(
     tasks_service: TaskService = Depends(Provide[Application.services.tasks_service]),
 ):
     return await tasks_service.delete(cmd=DeleteTaskCommand(id=id))
+
+
+@router.post(
+    "/{id}/answer",
+    response_model=TaskModel,
+    status_code=status.HTTP_201_CREATED,
+    description="Answer task",
+    responses={
+        **EmptyResult().build_docs(),
+    },
+)
+@inject
+async def answer_task(
+    id: PositiveInt,
+    cmd: CreateTaskCommand,
+    tasks_service: TaskService = Depends(Provide[Application.services.tasks_service]),
+):
+    # TODO: add answer logic
+    return await tasks_service.create(cmd=cmd)

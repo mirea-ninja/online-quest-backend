@@ -1,7 +1,7 @@
 from typing import List
 
 from dependency_injector.wiring import Provide, inject
-from fastapi import APIRouter, Body, Depends, status, Response
+from fastapi import APIRouter, Body, Depends, Response, status
 
 from app.internal.deps import Application
 
@@ -9,7 +9,6 @@ router = APIRouter(
     tags=["Quest"],
     prefix="/quest",
 )
-
 
 
 @router.get(
