@@ -1,15 +1,14 @@
 from typing import List
 
-from app.internal.schemes import (
-    UserModel,
-    CreateUserCommand,
-    GetUserCommand,
-    UpdateUserCommand,
-    DeleteUserCommand,
-)
-
-from app.internal.schemes import Success
 from app.internal.repository import UserRepository
+from app.internal.schemes import (
+    CreateUserCommand,
+    DeleteUserCommand,
+    GetUserCommand,
+    Success,
+    UpdateUserCommand,
+    UserModel,
+)
 from app.internal.service import BaseService
 
 

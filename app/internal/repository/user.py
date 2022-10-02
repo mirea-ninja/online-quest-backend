@@ -3,18 +3,16 @@ from typing import List
 from sqlalchemy import delete, update
 from sqlalchemy.future import select
 
-from app.pkg.database import get_session
-from app.pkg.database.models import User
-
 from app.internal.handlers import collect_response
 from app.internal.repository import BaseRepository
-
 from app.internal.schemes import (
     CreateUserCommand,
+    DeleteUserCommand,
     GetUserCommand,
     UpdateUserCommand,
-    DeleteUserCommand,
 )
+from app.pkg.database import get_session
+from app.pkg.database.models import User
 
 
 class UserRepository(

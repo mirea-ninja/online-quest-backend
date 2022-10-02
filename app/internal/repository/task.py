@@ -3,18 +3,16 @@ from typing import List
 from sqlalchemy import delete, update
 from sqlalchemy.future import select
 
-from app.pkg.database import get_session
-from app.pkg.database.models import Task
-
 from app.internal.handlers import collect_response
 from app.internal.repository import BaseRepository
-
 from app.internal.schemes import (
     CreateTaskCommand,
+    DeleteTaskCommand,
     GetTaskCommand,
     UpdateTaskCommand,
-    DeleteTaskCommand,
 )
+from app.pkg.database import get_session
+from app.pkg.database.models import Task
 
 
 class TaskRepository(

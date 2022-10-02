@@ -4,17 +4,16 @@ from dependency_injector.wiring import Provide, inject
 from fastapi import APIRouter, Body, Depends, status
 from pydantic import PositiveInt
 
-from app.internal.schemes import EmptyResult
-
 from app.internal.deps import Application
 from app.internal.schemes import (
-    UserModel,
     CreateUserCommand,
     DeleteUserCommand,
+    EmptyResult,
     GetUserCommand,
     Success,
     UpdateUserBody,
     UpdateUserCommand,
+    UserModel,
 )
 from app.internal.service import UserService
 

@@ -4,15 +4,14 @@ from dependency_injector.wiring import Provide, inject
 from fastapi import APIRouter, Body, Depends, status
 from pydantic import PositiveInt
 
-from app.internal.schemes import EmptyResult
-
 from app.internal.deps import Application
 from app.internal.schemes import (
-    TaskModel,
     CreateTaskCommand,
     DeleteTaskCommand,
+    EmptyResult,
     GetTaskCommand,
     Success,
+    TaskModel,
     UpdateTaskBody,
     UpdateTaskCommand,
 )

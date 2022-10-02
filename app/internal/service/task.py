@@ -1,15 +1,14 @@
 from typing import List
 
-from app.internal.schemes import (
-    TaskModel,
-    CreateTaskCommand,
-    GetTaskCommand,
-    UpdateTaskCommand,
-    DeleteTaskCommand,
-)
-
-from app.internal.schemes import Success
 from app.internal.repository import TaskRepository
+from app.internal.schemes import (
+    CreateTaskCommand,
+    DeleteTaskCommand,
+    GetTaskCommand,
+    Success,
+    TaskModel,
+    UpdateTaskCommand,
+)
 from app.internal.service import BaseService
 
 
