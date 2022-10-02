@@ -1,20 +1,19 @@
 from dependency_injector import containers, providers
 
-# from .repository import
-# from .service import
+from .repository import TaskRepository
+from .service import TaskService
 
 
 class Repositories(containers.DeclarativeContainer):
-    # stories_repository = providers.Singleton(StoriesRepository)]
+    tasks_repository = providers.Singleton(TaskRepository)
     pass
 
 
 class Services(containers.DeclarativeContainer):
     repositories = providers.DependenciesContainer()
-
-    # stories_service = providers.Factory(
-    #     StoriesService, repository=repositories.stories_repository
-    # )
+    tasks_service = providers.Factory(
+        TaskService, repository=repositories.tasks_repository
+    )
 
 
 class Application(containers.DeclarativeContainer):
