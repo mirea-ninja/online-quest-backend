@@ -1,7 +1,7 @@
 from sqlalchemy import BigInteger, Column, String
 from sqlalchemy.orm import relationship
 
-from app.pkg.database import Base
+from app.database import Base
 
 
 class Task(Base):

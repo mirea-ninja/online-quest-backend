@@ -11,8 +11,8 @@ from app.internal.schemes import (
     GetTaskCommand,
     UpdateTaskCommand,
 )
-from app.pkg.database import get_session
-from app.pkg.database.models import Task
+from app.database import get_session
+from app.database.models import Task
 
 
 class TaskRepository(

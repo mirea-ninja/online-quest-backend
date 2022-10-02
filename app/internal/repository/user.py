@@ -11,8 +11,8 @@ from app.internal.schemes import (
     GetUserCommand,
     UpdateUserCommand,
 )
-from app.pkg.database import get_session
-from app.pkg.database.models import User
+from app.database import get_session
+from app.database.models import User
 
 
 class UserRepository(

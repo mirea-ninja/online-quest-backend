@@ -3,7 +3,7 @@ from typing import Generic, List, TypeVar
 
 from pydantic import BaseModel
 
-from app.pkg.database import Base
+from app.database import Base
 
 TableType = TypeVar("TableType", bound=Base)
 CreateModelCommand = TypeVar("CreateModelCommand", bound=BaseModel)
