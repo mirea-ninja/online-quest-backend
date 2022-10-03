@@ -31,6 +31,7 @@ class Config(_Settings):
 
     ## Backend VK settings
     BACKEND_VK_SECRET_KEY: str
+    BACKEND_VK_SERVICE_KEY: str
 
     ## Sentry settings
     BACKEND_SENTRY_DSN: HttpUrl
