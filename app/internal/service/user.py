@@ -9,7 +9,8 @@ from app.internal.schemes import (
     UpdateUserCommand,
     UserModel,
 )
-from app.internal.service import BaseService
+
+from .base import BaseService
 
 
 class UserService(

@@ -1,18 +1,18 @@
 from dependency_injector import containers, providers
 
-from .repository import TaskRepository, UserRepository
-from .service import TaskService, UserService
+from .repository import AnswerRepository, UserRepository
+from .service import AnswerService, UserService
 
 
 class Repositories(containers.DeclarativeContainer):
-    tasks_repository = providers.Singleton(TaskRepository)
+    answers_repository = providers.Singleton(AnswerRepository)
     users_repository = providers.Singleton(UserRepository)
 
 
 class Services(containers.DeclarativeContainer):
     repositories: Repositories = providers.DependenciesContainer()
-    tasks_service = providers.Factory(
-        TaskService, repository=repositories.tasks_repository
+    answers_service = providers.Factory(
+        AnswerService, repository=repositories.answers_repository
     )
     users_service = providers.Factory(
         UserService, repository=repositories.users_repository

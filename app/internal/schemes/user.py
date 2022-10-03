@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from pydantic import BaseModel, PositiveInt
 
 __all__ = [
@@ -13,6 +15,7 @@ __all__ = [
 class UserModel(BaseModel):
     id: PositiveInt
     vk_user_id: PositiveInt
+    created_at: datetime
 
     class Config:
         orm_mode = True
