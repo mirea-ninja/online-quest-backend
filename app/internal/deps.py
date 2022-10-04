@@ -1,7 +1,7 @@
 from dependency_injector import containers, providers
 
 from .repository import AnswerRepository, UserRepository
-from .service import AnswerService, TelegramLoggerService, UserService
+from .service import AnswerService, TaskService, TelegramLoggerService, UserService
 
 
 class Repositories(containers.DeclarativeContainer):
@@ -20,6 +20,10 @@ class Services(containers.DeclarativeContainer):
         repository=repositories.answers_repository,
         users_service=users_service,
         telegram_logger_service=telegram_logger_service,
+    )
+    tasks_service = providers.Factory(
+        TaskService,
+        users_service=users_service,
     )
 
 

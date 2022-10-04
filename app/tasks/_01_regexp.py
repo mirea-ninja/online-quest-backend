@@ -5,5 +5,11 @@ def get_flag() -> str:
     return FLAG
 
 
+def get_task() -> dict:
+    return {
+        "task": "Найдите флаг в этом файле.",
+    }
+
+
 def check_solution(user_answer: str) -> bool:
     return user_answer == get_flag()

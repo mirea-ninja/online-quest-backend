@@ -26,3 +26,19 @@ def check_solution(task_number: int, user_answer: str) -> bool:
         9: lambda: _09_socket.check_solution(user_answer),
         10: lambda: _10_todo.check_solution(user_answer),
     }.get(task_number, lambda: False)()
+
+
+def get_task(task_number: int) -> dict:
+    """Получение задания по его номеру."""
+    return {
+        1: lambda: _01_regexp.get_task(),
+        2: lambda: _02_coordinates.get_task(),
+        3: lambda: _03_xor_decode.get_task(),
+        4: lambda: _04_osint.get_task(),
+        5: lambda: _05_images_xor_decode.get_task(),
+        6: lambda: _06_stegano.get_task(),
+        7: lambda: _07_post_request.get_task(),
+        8: lambda: _08_todo.get_task(),
+        9: lambda: _09_socket.get_task(),
+        10: lambda: _10_todo.get_task(),
+    }.get(task_number)()
