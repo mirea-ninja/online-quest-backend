@@ -1,5 +1,7 @@
 from datetime import datetime, timedelta
-from typing import Any, List, Union
+from typing import List, Union
+
+import pytz
 
 from app.core.utils import check_user
 from app.internal.repository import AnswerRepository
@@ -76,9 +78,9 @@ class AnswerService(
             ):
                 return TaskIsNotAvaliableYet()
 
-            elif all(
+            elif any(
                 answer.task_unique_number == cmd.task_unique_number
-                and answer.sent_at > datetime.now() - timedelta(seconds=30)
+                and datetime.utcnow() - answer.sent_at < timedelta(seconds=3)
                 for answer in all_user_answers
             ):
                 return TooManyAnswerRequests()
@@ -103,13 +105,17 @@ class AnswerService(
         await self.telegram_service.send_answer(
             user_id=cmd.user_id,
             answer=cmd.answer,
-            time=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            time=datetime.now(tz=pytz.timezone("Europe/Moscow")).strftime(
+                "%Y-%m-%d %H:%M:%S"
+            ),
         )
 
         if result:
             await self.telegram_service.send_solve(
                 user_id=cmd.user_id,
-                time=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                time=datetime.now(tz=pytz.timezone("Europe/Moscow")).strftime(
+                    "%Y-%m-%d %H:%M:%S"
+                ),
                 task_number=cmd.task_unique_number,
             )
             return CorrectAnswer()

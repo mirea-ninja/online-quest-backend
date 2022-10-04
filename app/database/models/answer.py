@@ -20,6 +20,6 @@ class Answer(Base):
     user = relationship("User", back_populates="answers", lazy="joined")
     user_id = Column(ForeignKey("user.id"))
     task_unique_number = Column(Integer, nullable=False)
-    sent_at = Column(DateTime, default=func.now())
+    sent_at = Column(DateTime(True), default=func.now())
     is_correct = Column(Boolean, nullable=False)
     answer = Column(String, nullable=False)  # текст ответа пользователя
