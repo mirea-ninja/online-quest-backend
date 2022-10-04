@@ -1,7 +1,7 @@
 from typing import List
 
 from dependency_injector.wiring import Provide, inject
-from fastapi import APIRouter, Body, Depends, status
+from fastapi import APIRouter, Body, Depends, status, HTTPException
 from pydantic import PositiveInt
 
 from app.internal.deps import Application
@@ -13,7 +13,7 @@ from app.internal.schemes import (
     GetAnswerCommand,
     Success,
     UpdateAnswerBody,
-    UpdateAnswerCommand,
+    UpdateAnswerCommand, AnswerInRequest,
 )
 from app.internal.service import AnswerService
 
@@ -54,11 +54,14 @@ async def get_all_answers(
 )
 @inject
 async def create_answer(
-    cmd: CreateAnswerCommand,
+    cmd: AnswerInRequest,
     answers_service: AnswerService = Depends(
         Provide[Application.services.answers_service]
     ),
 ):
+    if not 1 <= cmd.task_unique_number <= 10:
+        raise HTTPException(status_code=400, detail="Task number must be between 1 and 10")
+
     return await answers_service.create(cmd=cmd)
 
 

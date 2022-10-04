@@ -4,15 +4,6 @@ from pydantic import BaseModel, PositiveInt
 
 from .user import UserModel
 
-__all__ = [
-    "AnswerModel",
-    "CreateAnswerCommand",
-    "GetAnswerCommand",
-    "UpdateAnswerBody",
-    "UpdateAnswerCommand",
-    "DeleteAnswerCommand",
-]
-
 
 class AnswerModel(BaseModel):
     id: PositiveInt
@@ -20,6 +11,7 @@ class AnswerModel(BaseModel):
     task_unique_number: PositiveInt
     sent_at: datetime
     is_correct: bool
+    answer: str
 
     class Config:
         orm_mode = True
@@ -29,6 +21,14 @@ class CreateAnswerCommand(BaseModel):
     user_id: PositiveInt
     task_unique_number: PositiveInt
     is_correct: bool
+    answer: str
+
+
+class AnswerInRequest(BaseModel):
+    """Ответ на задание. Отправляется пользователем."""
+    user_id: PositiveInt
+    task_unique_number: PositiveInt
+    answer: str
 
 
 class GetAnswerCommand(BaseModel):

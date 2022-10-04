@@ -1,4 +1,4 @@
-from sqlalchemy import BigInteger, Boolean, Column, DateTime, ForeignKey, Integer, func
+from sqlalchemy import BigInteger, Boolean, Column, DateTime, ForeignKey, Integer, func, String
 from sqlalchemy.orm import relationship
 
 from app.database import Base
@@ -12,3 +12,4 @@ class Answer(Base):
     task_unique_number = Column(Integer, nullable=False)
     sent_at = Column(DateTime, default=func.now())
     is_correct = Column(Boolean, nullable=False)
+    answer = Column(String, nullable=False)  # текст ответа пользователя

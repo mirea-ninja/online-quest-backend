@@ -33,6 +33,10 @@ class Config(_Settings):
     BACKEND_VK_SECRET_KEY: str
     BACKEND_VK_SERVICE_KEY: str
 
+    ## Telegram bot settings
+    TELEGRAM_BOT_TOKEN: str
+    TELEGRAM_CHAT_ID: str
+
     ## Sentry settings
     BACKEND_SENTRY_DSN: HttpUrl
 
