@@ -58,6 +58,8 @@ def __handle_exception(func):
             raise NumericValueOutOfRange
         except ProgrammingError as e:
             print(e)
+        except ValueError as e:
+            print(e)
         except SQLAlchemyError as e:
             print(e)
             raise DriverError(message=e.code)

@@ -1,7 +1,7 @@
 from typing import List, Union
 
 from dependency_injector.wiring import Provide, inject
-from fastapi import APIRouter, Body, Depends, Header, HTTPException, status
+from fastapi import APIRouter, Depends, Header, HTTPException, status
 from pydantic import PositiveInt
 
 from app.config import config
@@ -15,8 +15,6 @@ from app.internal.schemes import (
     EmptyResult,
     GetAnswerCommand,
     Success,
-    UpdateAnswerBody,
-    UpdateAnswerCommand,
 )
 from app.internal.schemes.answer_status import (
     AnswerAlreadySent,
