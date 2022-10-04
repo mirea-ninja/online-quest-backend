@@ -8,7 +8,7 @@ https://ru.wikipedia.org/wiki/%D0%98%D1%81%D0%BA%D0%BB%D1%8E%D1%87%D0%B0%D1%8E%D
 Ключ шифрования: IIT
 """
 
-FLAG = "mirea_ninja_osa9du"
+FLAG = "ninja{u_r_n0w_g00d_at_x0r_b77e5f57}"
 KEY = "IIT"
 
 

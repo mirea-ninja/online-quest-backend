@@ -1,22 +1,31 @@
 from datetime import datetime, timedelta
-from app.tasks import check_solution
-from typing import List, Any, Union
+from typing import Any, List, Union
 
+from app.core.utils import check_user
 from app.internal.repository import AnswerRepository
 from app.internal.schemes import (
+    AnswerInRequest,
     AnswerModel,
     CreateAnswerCommand,
-
-    AnswerInRequest,
     DeleteAnswerCommand,
     GetAnswerCommand,
+    GetUserCommand,
     Success,
     UpdateAnswerCommand,
 )
-
-from app.internal.schemes.answer_status import CorrectAnswer, IncorrectAnswer, AnswerAlreadySent, TooManyAnswerRequests
+from app.internal.schemes.answer_status import (
+    AnswerAlreadySent,
+    CorrectAnswer,
+    IncorrectAnswer,
+    TaskIsNotAvaliableYet,
+    TooManyAnswerRequests,
+    UserIsBad,
+)
+from app.tasks import check_solution
 
 from .base import BaseService
+from .telegram_logger import TelegramLoggerService
+from .user import UserService
 
 
 class AnswerService(
@@ -29,36 +38,83 @@ class AnswerService(
     ]
 ):
     repository: AnswerRepository
+    users_service: UserService
+    telegram_logger_service: TelegramLoggerService
 
-    def __init__(self, repository: AnswerRepository) -> None:
+    def __init__(
+        self,
+        repository: AnswerRepository,
+        users_service: UserService,
+        telegram_logger_service: TelegramLoggerService,
+    ) -> None:
         super().__init__()
         self.repository = repository
+        self.users_service = users_service
+        self.telegram_service = telegram_logger_service
 
-    async def create(self, cmd: AnswerInRequest) -> Union[
-        AnswerAlreadySent, TooManyAnswerRequests, CorrectAnswer, IncorrectAnswer]:
+    async def create(
+        self, cmd: AnswerInRequest
+    ) -> Union[
+        AnswerAlreadySent,
+        TooManyAnswerRequests,
+        CorrectAnswer,
+        IncorrectAnswer,
+        UserIsBad,
+        TaskIsNotAvaliableYet,
+    ]:
+        user = await self.users_service.get(cmd=GetUserCommand(id=cmd.user_id))
+        if not check_user(user, cmd.vk_params):
+            return UserIsBad()
+
         all_user_answers = await self.repository.get_user_answers(cmd.user_id)
 
         if all_user_answers:
-            if any(answer.task_unique_number == cmd.task_unique_number and answer.answer == answer.answer for answer in
-                   all_user_answers):
-                return AnswerAlreadySent()
-            # Пользователь может отправлять только один ответ раз в 3 секунды
-            elif any(
-                    answer.task_unique_number == cmd.task_unique_number and answer.sent_at > datetime.now() - timedelta(
-                            seconds=3) for answer in all_user_answers):
+            if not any(
+                answer.task_unique_number == cmd.task_unique_number - 1
+                and answer.is_correct
+                for answer in all_user_answers
+            ):
+                return TaskIsNotAvaliableYet()
+
+            elif all(
+                answer.task_unique_number == cmd.task_unique_number
+                and answer.sent_at > datetime.now() - timedelta(seconds=30)
+                for answer in all_user_answers
+            ):
                 return TooManyAnswerRequests()
 
+            elif any(
+                answer.task_unique_number == cmd.task_unique_number
+                and answer.answer == cmd.answer
+                for answer in all_user_answers
+            ):
+                return AnswerAlreadySent()
         # Проверка ответа
         result = check_solution(cmd.task_unique_number, cmd.answer)
 
-        await self.repository.create(cmd=CreateAnswerCommand(
+        await self.repository.create(
+            cmd=CreateAnswerCommand(
+                user_id=cmd.user_id,
+                task_unique_number=cmd.task_unique_number,
+                answer=cmd.answer,
+                is_correct=result,
+            )
+        )
+        await self.telegram_service.send_answer(
             user_id=cmd.user_id,
-            task_unique_number=cmd.task_unique_number,
             answer=cmd.answer,
-            is_correct=result,
-        ))
+            time=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        )
 
-        return CorrectAnswer() if result else IncorrectAnswer()
+        if result:
+            await self.telegram_service.send_solve(
+                user_id=cmd.user_id,
+                time=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                task_number=cmd.task_unique_number,
+            )
+            return CorrectAnswer()
+
+        return IncorrectAnswer()
 
     async def get_all(self, skip: int = 0, limit: int = 100) -> List[AnswerModel]:
         result = await self.repository.get_all(skip=skip, limit=limit)

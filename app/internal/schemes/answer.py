@@ -24,11 +24,16 @@ class CreateAnswerCommand(BaseModel):
     answer: str
 
 
-class AnswerInRequest(BaseModel):
+class AnswerInRequestBody(BaseModel):
     """Ответ на задание. Отправляется пользователем."""
+
     user_id: PositiveInt
     task_unique_number: PositiveInt
     answer: str
+
+
+class AnswerInRequest(AnswerInRequestBody):
+    vk_params: str
 
 
 class GetAnswerCommand(BaseModel):

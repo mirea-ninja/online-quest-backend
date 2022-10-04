@@ -1,4 +1,13 @@
-from sqlalchemy import BigInteger, Boolean, Column, DateTime, ForeignKey, Integer, func, String
+from sqlalchemy import (
+    BigInteger,
+    Boolean,
+    Column,
+    DateTime,
+    ForeignKey,
+    Integer,
+    String,
+    func,
+)
 from sqlalchemy.orm import relationship
 
 from app.database import Base
@@ -6,6 +15,7 @@ from app.database import Base
 
 class Answer(Base):
     __tablename__ = "answer"
+
     id = Column(BigInteger, primary_key=True)
     user = relationship("User", back_populates="answers", lazy="joined")
     user_id = Column(ForeignKey("user.id"))

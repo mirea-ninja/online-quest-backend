@@ -1,9 +1,11 @@
 from typing import List
 
 from dependency_injector.wiring import Provide, inject
-from fastapi import APIRouter, Body, Depends, status
+from fastapi import APIRouter, Body, Depends, Header, HTTPException, status
 from pydantic import PositiveInt
 
+from app.config import config
+from app.core.utils import check_vk_sign
 from app.internal.deps import Application
 from app.internal.schemes import (
     CreateUserCommand,
@@ -34,10 +36,15 @@ router = APIRouter(
 )
 @inject
 async def get_all_users(
+    secret: str,
     skip: int = 0,
     limit: int = 100,
     users_service: UserService = Depends(Provide[Application.services.users_service]),
 ):
+    if secret != config.BACKEND_SECRET_KEY:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Unauthorized"
+        )
     return await users_service.get_all(skip=skip, limit=limit)
 
 
@@ -53,8 +60,11 @@ async def get_all_users(
 @inject
 async def create_user(
     cmd: CreateUserCommand,
+    vk_params: str = Header(...),
     users_service: UserService = Depends(Provide[Application.services.users_service]),
 ):
+    if not check_vk_sign(vk_params):
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Bad sign")
     return await users_service.create(cmd=cmd)
 
 
@@ -70,27 +80,37 @@ async def create_user(
 @inject
 async def get_user(
     id: PositiveInt,
+    secret: str,
     users_service: UserService = Depends(Provide[Application.services.users_service]),
 ):
+    if secret != config.BACKEND_SECRET_KEY:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Unauthorized"
+        )
     return await users_service.get(cmd=GetUserCommand(id=id))
 
 
-@router.put(
-    "/{id}",
-    response_model=Success,
-    status_code=status.HTTP_200_OK,
-    description="Update user by id",
-    responses={
-        **EmptyResult().build_docs(),
-    },
-)
-@inject
-async def update_user(
-    id: PositiveInt,
-    body: UpdateUserBody = Body(...),
-    users_service: UserService = Depends(Provide[Application.services.users_service]),
-):
-    return await users_service.update(cmd=UpdateUserCommand(id=id, **body.dict()))
+# @router.put(
+#     "/{id}",
+#     response_model=Success,
+#     status_code=status.HTTP_200_OK,
+#     description="Update user by id",
+#     responses={
+#         **EmptyResult().build_docs(),
+#     },
+# )
+# @inject
+# async def update_user(
+#     id: PositiveInt,
+#     secret: str,
+#     body: UpdateUserBody = Body(...),
+#     users_service: UserService = Depends(Provide[Application.services.users_service]),
+# ):
+#     if secret != config.BACKEND_SECRET_KEY:
+#         raise HTTPException(
+#             status_code=status.HTTP_401_UNAUTHORIZED, detail="Unauthorized"
+#         )
+#     return await users_service.update(cmd=UpdateUserCommand(id=id, **body.dict()))
 
 
 @router.delete(
@@ -105,6 +125,11 @@ async def update_user(
 @inject
 async def delete_user(
     id: PositiveInt,
+    secret: str,
     users_service: UserService = Depends(Provide[Application.services.users_service]),
 ):
+    if secret != config.BACKEND_SECRET_KEY:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Unauthorized"
+        )
     return await users_service.delete(cmd=DeleteUserCommand(id=id))

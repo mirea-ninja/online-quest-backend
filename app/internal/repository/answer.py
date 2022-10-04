@@ -18,9 +18,7 @@ class AnswerRepository:
     @collect_response
     async def get_user_answers(self, user_id: int) -> List[Answer]:
         async with get_session() as session:
-            res = await session.execute(
-                select(Answer).where(Answer.user_id == user_id)
-            )
+            res = await session.execute(select(Answer).where(Answer.user_id == user_id))
             return res.scalars().all()
 
     @collect_response

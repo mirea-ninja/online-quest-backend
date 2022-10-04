@@ -1,9 +1,28 @@
-from . import xor_decode
+from . import (
+    _01_regexp,
+    _02_coordinates,
+    _03_xor_decode,
+    _04_osint,
+    _05_images_xor_decode,
+    _06_stegano,
+    _07_post_request,
+    _08_todo,
+    _09_socket,
+    _10_todo,
+)
 
 
 def check_solution(task_number: int, user_answer: str) -> bool:
     """Проверка ответа пользователя на задание."""
     return {
-        1: lambda: xor_decode.check_solution(user_answer),
-        #...
+        1: lambda: _01_regexp.check_solution(user_answer),
+        2: lambda: _02_coordinates.check_solution(user_answer),
+        3: lambda: _03_xor_decode.check_solution(user_answer),
+        4: lambda: _04_osint.check_solution(user_answer),
+        5: lambda: _05_images_xor_decode.check_solution(user_answer),
+        6: lambda: _06_stegano.check_solution(user_answer),
+        7: lambda: _07_post_request.check_solution(user_answer),
+        8: lambda: _08_todo.check_solution(user_answer),
+        9: lambda: _09_socket.check_solution(user_answer),
+        10: lambda: _10_todo.check_solution(user_answer),
     }.get(task_number, lambda: False)()

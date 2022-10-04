@@ -1,10 +1,18 @@
 from base64 import b64encode
 from hashlib import sha256
 from hmac import HMAC
-from urllib.parse import urlencode
+from urllib.parse import parse_qsl, urlencode
+
+from app.config import config
+from app.internal.schemes import UserModel
 
 
-def check_vk_sign(query: dict, secret: str) -> bool:
+def check_vk_sign(vk_params: str) -> bool:
+    if config.TEST_MODE:
+        return True
+
+    query = dict(parse_qsl(vk_params, keep_blank_values=True))
+
     if not query.get("sign"):
         return False
 
@@ -16,7 +24,11 @@ def check_vk_sign(query: dict, secret: str) -> bool:
     ordered = {k: query[k] for k in vk_subset}
 
     hash_code = b64encode(
-        HMAC(secret.encode(), urlencode(ordered, doseq=True).encode(), sha256).digest()
+        HMAC(
+            config.BACKEND_VK_SECRET_KEY.encode(),
+            urlencode(ordered, doseq=True).encode(),
+            sha256,
+        ).digest()
     ).decode("utf-8")
 
     if hash_code[-1] == "=":
@@ -24,3 +36,14 @@ def check_vk_sign(query: dict, secret: str) -> bool:
 
     fixed_hash = hash_code.replace("+", "-").replace("/", "_")
     return query.get("sign") == fixed_hash
+
+
+def check_user(user: UserModel, vk_params: str) -> bool:
+    if config.TEST_MODE:
+        return True
+
+    query = dict(parse_qsl(vk_params, keep_blank_values=True))
+    vk_subset = sorted(filter(lambda key: key.startswith("vk_"), query))
+    ordered = {k: query[k] for k in vk_subset}
+
+    return ordered["vk_user_id"] == str(user.vk_user_id)

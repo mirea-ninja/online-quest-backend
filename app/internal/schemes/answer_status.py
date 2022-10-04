@@ -15,3 +15,11 @@ class AnswerAlreadySent(BaseModel):
 
 class TooManyAnswerRequests(BaseModel):
     message: str = "too many answer requests. try again later"
+
+
+class TaskIsNotAvaliableYet(BaseModel):
+    message: str = "task is not avaliable yet for you"
+
+
+class UserIsBad(BaseModel):
+    message: str = "bad signature"
