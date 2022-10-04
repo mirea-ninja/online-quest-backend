@@ -26,4 +26,7 @@ class TaskService:
         if not check_user(user, cmd.vk_params):
             return UserIsBad()
 
+        all_user_answers = await self.repository.get_user_answers(cmd.user_id)
+        
+
         return get_task(cmd.task_unique_number)
