@@ -6,10 +6,12 @@ from sqlalchemy.future import select
 from app.database import get_session
 from app.database.models import Answer
 from app.internal.handlers import collect_response
-from app.internal.schemes import CreateAnswerCommand
-from app.internal.schemes import DeleteAnswerCommand
-from app.internal.schemes import GetAnswerCommand
-from app.internal.schemes import UpdateAnswerCommand
+from app.internal.schemes import (
+    CreateAnswerCommand,
+    DeleteAnswerCommand,
+    GetAnswerCommand,
+    UpdateAnswerCommand,
+)
 
 
 class AnswerRepository:

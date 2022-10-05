@@ -1,10 +1,7 @@
 from typing import Union
 
 from app.core.utils import check_user
-from app.internal.schemes import GetUserCommand
-from app.internal.schemes import TaskInRequest
-from app.internal.schemes import TaskModel
-from app.internal.schemes import UserIsBad
+from app.internal.schemes import GetUserCommand, TaskInRequest, TaskModel, UserIsBad
 from app.tasks import get_task
 
 from ..repository import AnswerRepository

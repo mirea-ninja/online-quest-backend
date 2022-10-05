@@ -1,6 +1,6 @@
 from app.internal.schemes import TaskModel
 
-FLAG = "ninja{todo}"
+FLAG = "ninja{1t_wa5_hard3r_than_0th3r5_48007ac5}"
 
 
 def get_flag() -> str:

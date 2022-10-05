@@ -1,14 +1,16 @@
 from ..internal.schemes import TaskModel
-from . import _01_regexp
-from . import _02_coordinates
-from . import _03_xor_decode
-from . import _04_osint
-from . import _05_images_xor_decode
-from . import _06_stegano
-from . import _07_post_request
-from . import _08_todo
-from . import _09_socket
-from . import _10_todo
+from . import (
+    _01_regexp,
+    _02_coordinates,
+    _03_xor_decode,
+    _04_osint,
+    _05_images_xor_decode,
+    _06_stegano,
+    _07_post_request,
+    _08_square_chiper,
+    _09_socket,
+    _10_public_key,
+)
 
 
 def check_solution(task_number: int, user_answer: str) -> bool:
@@ -21,9 +23,9 @@ def check_solution(task_number: int, user_answer: str) -> bool:
         5: lambda: _05_images_xor_decode.check_solution(user_answer),
         6: lambda: _06_stegano.check_solution(user_answer),
         7: lambda: _07_post_request.check_solution(user_answer),
-        8: lambda: _08_todo.check_solution(user_answer),
+        8: lambda: _08_square_chiper.check_solution(user_answer),
         9: lambda: _09_socket.check_solution(user_answer),
-        10: lambda: _10_todo.check_solution(user_answer),
+        10: lambda: _10_public_key.check_solution(user_answer),
     }.get(task_number, lambda: False)()
 
 
@@ -37,7 +39,7 @@ def get_task(task_number: int) -> TaskModel:
         5: lambda: _05_images_xor_decode.get_task(),
         6: lambda: _06_stegano.get_task(),
         7: lambda: _07_post_request.get_task(),
-        8: lambda: _08_todo.get_task(),
+        8: lambda: _08_square_chiper.get_task(),
         9: lambda: _09_socket.get_task(),
-        10: lambda: _10_todo.get_task(),
+        10: lambda: _10_public_key.get_task(),
     }.get(task_number)()

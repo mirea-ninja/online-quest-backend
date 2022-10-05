@@ -1,16 +1,17 @@
 from typing import List
 
-from sqlalchemy import delete
-from sqlalchemy import update
+from sqlalchemy import delete, update
 from sqlalchemy.future import select
 
 from app.database import get_session
 from app.database.models import User
 from app.internal.handlers import collect_response
-from app.internal.schemes import CreateUserCommand
-from app.internal.schemes import DeleteUserCommand
-from app.internal.schemes import GetUserCommand
-from app.internal.schemes import UpdateUserCommand
+from app.internal.schemes import (
+    CreateUserCommand,
+    DeleteUserCommand,
+    GetUserCommand,
+    UpdateUserCommand,
+)
 
 from .base import BaseRepository
 
@@ -27,10 +28,15 @@ class UserRepository(
     @collect_response
     async def create(self, cmd: CreateUserCommand) -> User:
         async with get_session() as session:
-            db_object = User(**cmd.dict())
-            session.add(db_object)
-            await session.commit()
-            await session.refresh(db_object)
+            db_object = await session.execute(
+                select(User).where(User.vk_user_id == cmd.vk_user_id).limit(1)
+            )
+            db_object = db_object.scalar()
+            if db_object is None:
+                db_object = User(**cmd.dict())
+                session.add(db_object)
+                await session.commit()
+                await session.refresh(db_object)
             return db_object
 
     @collect_response

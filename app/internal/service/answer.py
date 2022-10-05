@@ -1,26 +1,28 @@
-from datetime import datetime
-from datetime import timedelta
-from typing import List
-from typing import Union
+from datetime import datetime, timedelta
+from typing import List, Union
 
 import pytz
 
 from app.core.utils import check_user
 from app.internal.repository import AnswerRepository
-from app.internal.schemes import AnswerInRequest
-from app.internal.schemes import AnswerModel
-from app.internal.schemes import CreateAnswerCommand
-from app.internal.schemes import DeleteAnswerCommand
-from app.internal.schemes import GetAnswerCommand
-from app.internal.schemes import GetUserCommand
-from app.internal.schemes import Success
-from app.internal.schemes import UpdateAnswerCommand
-from app.internal.schemes.answer_status import AnswerAlreadySent
-from app.internal.schemes.answer_status import CorrectAnswer
-from app.internal.schemes.answer_status import IncorrectAnswer
-from app.internal.schemes.answer_status import TaskIsNotAvaliableYet
-from app.internal.schemes.answer_status import TooManyAnswerRequests
-from app.internal.schemes.answer_status import UserIsBad
+from app.internal.schemes import (
+    AnswerInRequest,
+    AnswerModel,
+    CreateAnswerCommand,
+    DeleteAnswerCommand,
+    GetAnswerCommand,
+    GetUserCommand,
+    Success,
+    UpdateAnswerCommand,
+)
+from app.internal.schemes.answer_status import (
+    AnswerAlreadySent,
+    CorrectAnswer,
+    IncorrectAnswer,
+    TaskIsNotAvaliableYet,
+    TooManyAnswerRequests,
+    UserIsBad,
+)
 from app.tasks import check_solution
 
 from .base import BaseService

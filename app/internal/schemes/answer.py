@@ -1,7 +1,6 @@
 from datetime import datetime
 
-from pydantic import BaseModel
-from pydantic import PositiveInt
+from pydantic import BaseModel, PositiveInt
 
 from .user import UserModel
 

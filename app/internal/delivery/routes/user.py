@@ -1,23 +1,20 @@
 from typing import List
 
-from dependency_injector.wiring import Provide
-from dependency_injector.wiring import inject
-from fastapi import APIRouter
-from fastapi import Depends
-from fastapi import Header
-from fastapi import HTTPException
-from fastapi import status
+from dependency_injector.wiring import Provide, inject
+from fastapi import APIRouter, Depends, Header, HTTPException, status
 from pydantic import PositiveInt
 
 from app.config import config
 from app.core.utils import check_vk_sign
 from app.internal.deps import Application
-from app.internal.schemes import CreateUserCommand
-from app.internal.schemes import DeleteUserCommand
-from app.internal.schemes import EmptyResult
-from app.internal.schemes import GetUserCommand
-from app.internal.schemes import Success
-from app.internal.schemes import UserModel
+from app.internal.schemes import (
+    CreateUserCommand,
+    DeleteUserCommand,
+    EmptyResult,
+    GetUserCommand,
+    Success,
+    UserModel,
+)
 from app.internal.service import UserService
 
 router = APIRouter(

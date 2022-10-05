@@ -1,12 +1,7 @@
-from dependency_injector import containers
-from dependency_injector import providers
+from dependency_injector import containers, providers
 
-from .repository import AnswerRepository
-from .repository import UserRepository
-from .service import AnswerService
-from .service import TaskService
-from .service import TelegramLoggerService
-from .service import UserService
+from .repository import AnswerRepository, UserRepository
+from .service import AnswerService, TaskService, TelegramLoggerService, UserService
 
 
 class Repositories(containers.DeclarativeContainer):

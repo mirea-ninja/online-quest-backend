@@ -1,29 +1,27 @@
-from typing import List
-from typing import Union
+from typing import List, Union
 
-from dependency_injector.wiring import Provide
-from dependency_injector.wiring import inject
-from fastapi import APIRouter
-from fastapi import Depends
-from fastapi import Header
-from fastapi import HTTPException
-from fastapi import status
+from dependency_injector.wiring import Provide, inject
+from fastapi import APIRouter, Depends, Header, HTTPException, status
 from pydantic import PositiveInt
 
 from app.config import config
 from app.core.utils import check_vk_sign
 from app.internal.deps import Application
-from app.internal.schemes import AnswerInRequest
-from app.internal.schemes import AnswerInRequestBody
-from app.internal.schemes import AnswerModel
-from app.internal.schemes import DeleteAnswerCommand
-from app.internal.schemes import EmptyResult
-from app.internal.schemes import GetAnswerCommand
-from app.internal.schemes import Success
-from app.internal.schemes.answer_status import AnswerAlreadySent
-from app.internal.schemes.answer_status import CorrectAnswer
-from app.internal.schemes.answer_status import IncorrectAnswer
-from app.internal.schemes.answer_status import TooManyAnswerRequests
+from app.internal.schemes import (
+    AnswerInRequest,
+    AnswerInRequestBody,
+    AnswerModel,
+    DeleteAnswerCommand,
+    EmptyResult,
+    GetAnswerCommand,
+    Success,
+)
+from app.internal.schemes.answer_status import (
+    AnswerAlreadySent,
+    CorrectAnswer,
+    IncorrectAnswer,
+    TooManyAnswerRequests,
+)
 from app.internal.service import AnswerService
 
 router = APIRouter(
