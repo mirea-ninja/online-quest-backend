@@ -1,4 +1,8 @@
-from sqlalchemy import BigInteger, Column, DateTime, Integer, func
+from sqlalchemy import BigInteger
+from sqlalchemy import Column
+from sqlalchemy import DateTime
+from sqlalchemy import Integer
+from sqlalchemy import func
 from sqlalchemy.orm import relationship
 
 from app.database import Base

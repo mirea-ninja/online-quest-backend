@@ -1,7 +1,8 @@
 from contextlib import asynccontextmanager
 
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.orm import DeclarativeMeta, declarative_base
+from sqlalchemy.orm import DeclarativeMeta
+from sqlalchemy.orm import declarative_base
 
 from .connection import SqlAlchemyConnection
 

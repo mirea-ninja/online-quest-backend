@@ -1,11 +1,15 @@
-from pydantic import BaseModel, PositiveInt
+from typing import Optional
+
+from pydantic import BaseModel
+from pydantic import PositiveInt
 
 
 class TaskModel(BaseModel):
-    # TODO: Create Task Model
     task_unique_number: PositiveInt
-    text: str
-    hint: str
+    hint: Optional[str] = None  # подсказка
+    question: str  # текст задания
+    text: str  # копируемый текст, используемый в форме задания
+    media_links: list[str]  # ссылки на медиафайлы, если нужно
 
 
 class TaskInRequest(BaseModel):

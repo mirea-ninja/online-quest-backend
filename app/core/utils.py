@@ -1,7 +1,8 @@
 from base64 import b64encode
 from hashlib import sha256
 from hmac import HMAC
-from urllib.parse import parse_qsl, urlencode
+from urllib.parse import parse_qsl
+from urllib.parse import urlencode
 
 from app.config import config
 from app.internal.schemes import UserModel

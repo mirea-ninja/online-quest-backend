@@ -1,6 +1,7 @@
 from datetime import datetime
 
-from pydantic import BaseModel, PositiveInt
+from pydantic import BaseModel
+from pydantic import PositiveInt
 
 __all__ = [
     "UserModel",

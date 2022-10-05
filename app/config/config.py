@@ -4,7 +4,9 @@ from functools import lru_cache
 from typing import List
 
 from dotenv import find_dotenv
-from pydantic import AnyHttpUrl, BaseSettings, EmailStr, HttpUrl, validator
+from pydantic import AnyHttpUrl
+from pydantic import BaseSettings
+from pydantic import validator
 
 
 class _Settings(BaseSettings):

@@ -1,9 +1,7 @@
-from typing import List
-
-from dependency_injector.wiring import Provide, inject
-from fastapi import APIRouter, Body, Depends, Response, status
-
-from app.internal.deps import Application
+from dependency_injector.wiring import inject
+from fastapi import APIRouter
+from fastapi import Response
+from fastapi import status
 
 router = APIRouter(
     tags=["Quest"],

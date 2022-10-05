@@ -1,18 +1,17 @@
 import functools
 
-from asyncpg import ForeignKeyViolationError, UniqueViolationError
-from sqlalchemy.exc import (
-    AmbiguousForeignKeysError,
-    DataError,
-    IntegrityError,
-    NoForeignKeysError,
-    NoReferencedColumnError,
-    NoReferencedTableError,
-    NoReferenceError,
-    NoResultFound,
-    ProgrammingError,
-    SQLAlchemyError,
-)
+from asyncpg import ForeignKeyViolationError
+from asyncpg import UniqueViolationError
+from sqlalchemy.exc import AmbiguousForeignKeysError
+from sqlalchemy.exc import DataError
+from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import NoForeignKeysError
+from sqlalchemy.exc import NoReferencedColumnError
+from sqlalchemy.exc import NoReferencedTableError
+from sqlalchemy.exc import NoReferenceError
+from sqlalchemy.exc import NoResultFound
+from sqlalchemy.exc import ProgrammingError
+from sqlalchemy.exc import SQLAlchemyError
 
 from ..schemes.exceptions import *
 

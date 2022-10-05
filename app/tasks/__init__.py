@@ -1,15 +1,14 @@
-from . import (
-    _01_regexp,
-    _02_coordinates,
-    _03_xor_decode,
-    _04_osint,
-    _05_images_xor_decode,
-    _06_stegano,
-    _07_post_request,
-    _08_todo,
-    _09_socket,
-    _10_todo,
-)
+from ..internal.schemes import TaskModel
+from . import _01_regexp
+from . import _02_coordinates
+from . import _03_xor_decode
+from . import _04_osint
+from . import _05_images_xor_decode
+from . import _06_stegano
+from . import _07_post_request
+from . import _08_todo
+from . import _09_socket
+from . import _10_todo
 
 
 def check_solution(task_number: int, user_answer: str) -> bool:
@@ -28,7 +27,7 @@ def check_solution(task_number: int, user_answer: str) -> bool:
     }.get(task_number, lambda: False)()
 
 
-def get_task(task_number: int) -> dict:
+def get_task(task_number: int) -> TaskModel:
     """Получение задания по его номеру."""
     return {
         1: lambda: _01_regexp.get_task(),

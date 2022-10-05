@@ -1,17 +1,16 @@
 from typing import List
 
-from sqlalchemy import delete, update
+from sqlalchemy import delete
+from sqlalchemy import update
 from sqlalchemy.future import select
 
 from app.database import get_session
 from app.database.models import User
 from app.internal.handlers import collect_response
-from app.internal.schemes import (
-    CreateUserCommand,
-    DeleteUserCommand,
-    GetUserCommand,
-    UpdateUserCommand,
-)
+from app.internal.schemes import CreateUserCommand
+from app.internal.schemes import DeleteUserCommand
+from app.internal.schemes import GetUserCommand
+from app.internal.schemes import UpdateUserCommand
 
 from .base import BaseRepository
 
