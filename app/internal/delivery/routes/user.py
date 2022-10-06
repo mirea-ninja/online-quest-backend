@@ -69,7 +69,7 @@ async def create_user(
     vk_subset = sorted(filter(lambda key: key.startswith("vk_"), query))
     ordered = {k: query[k] for k in vk_subset}
 
-    if not cmd.vk_user_id == ordered["vk_user_id"]:
+    if not cmd.vk_user_id == int(ordered["vk_user_id"]):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Bad sign")
 
     return await users_service.create(cmd=cmd)
