@@ -1,6 +1,7 @@
 from typing import TypeVar
 
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 from starlette.middleware.cors import CORSMiddleware
 
 from app.config import config
@@ -29,6 +30,7 @@ class Server:
                 allow_headers=["*"],
             )
 
+        app.mount("/static", StaticFiles(directory="./app/tasks/static"), name="static")
         self._register_routes(app)
         self._register_controllers()
         return app
