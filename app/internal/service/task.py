@@ -42,7 +42,7 @@ class TaskService:
         if all_user_answers:
             last_answer = max(
                 all_user_answers,
-                key=lambda answer: answer.task_unique_number,
+                key=lambda answer: answer.id,
             )
             if last_answer.is_correct:
                 task_unique_number = last_answer.task_unique_number + 1

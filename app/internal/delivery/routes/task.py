@@ -32,7 +32,7 @@ async def get_next_task(
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Bad sign")
 
     if await tasks_service.is_all_tasks_done(user_id):
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="All tasks done")
+        raise HTTPException(status_code=status.HTTP_200_OK, detail="All tasks done")
 
     return await tasks_service.get(
         cmd=TaskInRequest(user_id=user_id, vk_params=vk_params)
