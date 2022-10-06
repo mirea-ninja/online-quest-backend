@@ -1,4 +1,5 @@
 from typing import List
+from urllib.parse import parse_qsl
 
 from dependency_injector.wiring import Provide, inject
 from fastapi import APIRouter, Depends, Header, HTTPException, status
@@ -63,6 +64,14 @@ async def create_user(
 ):
     if not check_vk_sign(vk_params):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Bad sign")
+
+    query = dict(parse_qsl(vk_params, keep_blank_values=True))
+    vk_subset = sorted(filter(lambda key: key.startswith("vk_"), query))
+    ordered = {k: query[k] for k in vk_subset}
+
+    if not cmd.vk_user_id == ordered["vk_user_id"]:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Bad sign")
+
     return await users_service.create(cmd=cmd)
 
 
