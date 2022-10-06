@@ -69,15 +69,17 @@ class AnswerService(
             return UserIsBad()
 
         all_user_answers = await self.repository.get_user_answers(cmd.user_id)
-        last_answer = max(all_user_answers, key=lambda answer: answer.id)
         avaliable_task = 1
-        if last_answer.is_correct:
-            avaliable_task = last_answer.task_unique_number + 1
-        else:
-            avaliable_task = last_answer.task_unique_number
+        if all_user_answers:
+            last_answer = max(all_user_answers, key=lambda answer: answer.id)
+
+            if last_answer.is_correct:
+                avaliable_task = last_answer.task_unique_number + 1
+            else:
+                avaliable_task = last_answer.task_unique_number
+                
         if all_user_answers:
             if cmd.task_unique_number > avaliable_task:
-
                 return TaskIsNotAvaliableYet()
 
             elif any(
