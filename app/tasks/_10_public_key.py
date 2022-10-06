@@ -14,7 +14,7 @@ def get_task() -> TaskModel:
         text="Answer: 7235950 8653973 22582420 46400007 30942811 18377826 9090748 1809330 24157907 26947293 26463809 19620468 27720117 24249324 18761476",
         media_links=[
             "/static/_10_private_16b5541b2f683ec4.key",
-            "static/_10_solver_d38a5d61a6b2fedf.py",
+            "/static/_10_solver_d38a5d61a6b2fedf.py",
         ],
     )
 
