@@ -11,7 +11,7 @@ def get_task() -> TaskModel:
     return TaskModel(
         task_unique_number=1,
         question="Настоящий мастер должен быть смекалистым, чтобы вести свой клан вперед. Сейчас мы проверим насколько твои движения быстры, а ум ясен. Сможешь ли ты отыскать то, что мы спрятали в тексте",
-        text="",
+        text=open("./app/tasks/_01_source.txt", "r", encoding="utf-8").read(),
         media_links=[],
     )
 
